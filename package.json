@@ -1,0 +1,31 @@
+{
+  "name": "tobias-apollo-server",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.$NODE_ENV.js",
+    "start": "node dist/main",
+    "start:env": "node --require dotenv/config dist/main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "to be anounced",
+  "devDependencies": {
+    "@types/webpack-env": "^1.13.9",
+    "clean-webpack-plugin": "^2.0.1",
+    "dotenv": "^7.0.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.2.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "apollo-server": "^2.4.8",
+    "graphql": "^14.1.1"
+  }
+}
