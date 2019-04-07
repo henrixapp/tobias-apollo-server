@@ -75,7 +75,12 @@ export default {
     deleteTop: async (parent, { top }) => {
       let m = await TopModel.findByIdAndDelete(top)
       return true
+    },
+    updateCurrentUser: async(parent,{fullname},context)=>{
+      const {user} = await context
+      return UserModel.findOneAndUpdate(user,{fullname},{new:true})
     }
+    ,
     uploadProfilePicture: async (parent, { file },context) => {
       const { createReadStream, filename, mimetype } = await file
       const {user} = await context
