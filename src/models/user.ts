@@ -3,6 +3,8 @@ import Meeting from "./meeting";
 import Top from "./top";
 export default class User extends Typegoose {
     @prop()
+    image: String
+    @prop()
     username: String
     @prop()
     fullname?: String

@@ -68,12 +68,22 @@ export default gql`
     Delete a Top
     """
     deleteTop(top:ID!):Boolean!
+
+    """
+    Updates current user
+    """
+    updateCurrentUser(fullname:String!):User!
+    """
+    Upload a profile picture
+    """
+    uploadProfilePicture(file: Upload!): User!
   }
 
   type User {
     id: ID!
     username: String!
     fullname: String
+    image:String
     submitted_tops: [Top]
     authored_tops: [Top]
   }
@@ -116,5 +126,11 @@ export default gql`
     date: Date
     title:String!
     description: String!
+  }
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
   }
 `;
