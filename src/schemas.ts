@@ -14,7 +14,10 @@ export default gql`
     """
     me: User
     user(id:ID!):User
-
+    """
+    Finds users by username or fullname
+    """
+    findUsers(text:String):[User!]
     """
     List of all organizations.
     """

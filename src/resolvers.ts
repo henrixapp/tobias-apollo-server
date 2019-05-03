@@ -28,6 +28,9 @@ export default {
     users: async (parent, _, context: Context) => {
       return await UserModel.find()
     },
+    findUsers: async(parent,{text},context)=>{
+      return UserModel.find({$or:[{fullname:new RegExp(text)},{username:new RegExp(text)}]})
+    },
     organizations: async () => {
       return await OrganizationModel.find()
     },
