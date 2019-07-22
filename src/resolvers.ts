@@ -7,6 +7,8 @@ import { MeetingModel } from "./models/meeting";
 import Top, { TopModel } from "./models/top";
 import Attachment from "./models/attachment"
 import fs from "fs"
+import { ActionModel } from "./models/action";
+import { ProtocolModel } from "./models/protocol";
 let user: User = new User("henrik", "Henrik Reinstädtler")
 user.id = "ID"
 export default {
@@ -82,8 +84,16 @@ export default {
     updateCurrentUser: async(parent,{fullname},context)=>{
       const {user} = await context
       return UserModel.findOneAndUpdate(user,{fullname},{new:true})
-    }
-    ,
+    },
+    createAction: async (parent,{meeting,top},context)=>{
+      let action =  new ActionModel({meeting,top})
+      action.save()
+      return action
+    },
+    deleteAction: async(parent,{action},context)=>{
+      let m = await ActionModel.findByIdAndDelete(action)
+      return true
+    },
     uploadProfilePicture: async (parent, { file },context) => {
       const { createReadStream, filename, mimetype } = await file
       const {user} = await context
@@ -96,6 +106,17 @@ export default {
           resolve(us)
         })
       })
+    }
+  },
+  Action: {
+    top: async (action) => {
+      return await TopModel.findById(action.top)
+    },
+    meeting: async (action) => {
+      return await MeetingModel.findById(action.meeting)
+    },
+    protocols: async (action) => {
+      return await ProtocolModel.findById({action})
     }
   },
   User: {

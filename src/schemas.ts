@@ -80,6 +80,30 @@ export default gql`
     Upload a profile picture
     """
     uploadProfilePicture(file: Upload!): User!
+
+    """
+    Creates an action between a meeting and top.
+    """
+    createAction(meeting:ID!,top:ID!):Action!
+    """
+    Removes an Action from the system
+    """
+    deleteAction(action: ID!):Boolean!
+  }
+
+  type Action {
+    id: ID!
+    meeting: Meeting!
+    top: Meeting!
+    protocols: [Protocol]
+  }
+
+  type Protocol {
+    id: ID!
+    content:String
+    result: String
+    status: Int
+    action: Action!
   }
 
   type User {
@@ -107,6 +131,7 @@ export default gql`
   """
   type Top {
     id:ID!
+    actions: [Action]
     organization: Organization!
     submitter: User
     author: User
@@ -121,6 +146,7 @@ export default gql`
 
   type Meeting {
     id:ID!
+    actions: [Action]
     organization: Organization!
     clerk: User
     moderation:User
