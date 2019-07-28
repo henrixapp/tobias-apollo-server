@@ -15,8 +15,12 @@ import { UserModel } from './models/user';
     typeDefs,
     introspection: environment.apollo.introspection,
     playground: environment.apollo.playground,
-    context:({req})=> {
-      let user = UserModel.findOne({username:req.headers["X-Forwarded-User"]||"henrik"})
+     context:async ({req})=> {
+      let user = await UserModel.findOne({username:req.headers["X-Forwarded-User"]||"admin"})
+      if(user==null){
+        user = await UserModel.create({username:req.headers["X-Forwarded-User"]||"admin", fullname:"Admin"})
+        user.save();
+      }
       return {user}
     }
   });

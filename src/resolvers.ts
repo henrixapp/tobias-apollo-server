@@ -82,8 +82,8 @@ export default {
       return true
     },
     updateCurrentUser: async(parent,{fullname},context)=>{
-      const {user} = await context
-      return UserModel.findOneAndUpdate(user,{fullname},{new:true})
+      const {user} =  context
+      return await UserModel.findByIdAndUpdate(user._id,{fullname},{new:true, useFindAndModify:false})
     },
     createAction: async (parent,{meeting,top},context)=>{
       let action =  new ActionModel({meeting,top})
@@ -96,12 +96,12 @@ export default {
     },
     uploadProfilePicture: async (parent, { file },context) => {
       const { createReadStream, filename, mimetype } = await file
-      const {user} = await context
+      const {user} =  context
       const stream = await createReadStream()
       return new Promise(async (resolve, reject) =>
       {
         (await Attachment).model.write({filename,contentType:mimetype}, stream, (error, file) => {
-          let us = UserModel.findOneAndUpdate(user,{image:file._id},{new:true})
+          let us = UserModel.findByIdAndUpdate(user._id,{image:file._id},{new:true, useFindAndModify:false})
           
           resolve(us)
         })

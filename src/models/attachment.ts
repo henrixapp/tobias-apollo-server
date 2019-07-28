@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const run = async()=>{
-    await mongoose.connect('mongodb://localhost:27017/test');
+    await mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser: true,  useFindAndModify: false });
     const gridfs = require("mongoose-gridfs")
     return gridfs({
     collection: 'attachments',
